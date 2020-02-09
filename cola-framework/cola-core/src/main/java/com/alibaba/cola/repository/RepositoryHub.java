@@ -1,11 +1,7 @@
 package com.alibaba.cola.repository;
 
-import com.alibaba.cola.exception.framework.ColaException;
-import lombok.Getter;
+import com.alibaba.cola.common.ApplicationContextHelper;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author lorne
@@ -14,15 +10,9 @@ import java.util.Map;
 @Component
 public class RepositoryHub {
 
-    @Getter
-    private Map<Class<? extends CommandI>, RepositoryHandlerI> presentationRepository = new HashMap<>();
 
-    public RepositoryHandlerI getPresentationRepository(Class<? extends CommandI> presentationClass) {
-        RepositoryHandlerI presentationHandler = presentationRepository.get(presentationClass);
-        if (presentationHandler == null ) {
-            throw new ColaException(presentationClass + "is not registered in presentationHub, please register first");
-        }
-        return presentationHandler;
+    public <T extends RepositoryHandlerI> T getRepositoryHandler(Class<T> clazz){
+        return ApplicationContextHelper.getBean(clazz);
     }
 
 }

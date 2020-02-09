@@ -8,7 +8,7 @@ import com.alibaba.cola.dto.Executor;
  * @author Frank Zhang
  * @date 2019-02-28 7:18 PM
  */
-public class CommonCommand extends Executor {
+public class CommonCommand<T> extends Executor<T> {
     private String operater;
     private boolean needsOperator;
 

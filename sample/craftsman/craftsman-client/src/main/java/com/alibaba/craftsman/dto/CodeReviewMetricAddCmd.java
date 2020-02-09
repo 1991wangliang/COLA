@@ -1,5 +1,6 @@
 package com.alibaba.craftsman.dto;
 
+import com.alibaba.cola.dto.Response;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Positive;
  * @date 2019-03-01 10:09 AM
  */
 @Data
-public class CodeReviewMetricAddCmd extends CommonCommand{
+public class CodeReviewMetricAddCmd extends CommonCommand<Response>{
 
     @NotEmpty
     private String ownerId;

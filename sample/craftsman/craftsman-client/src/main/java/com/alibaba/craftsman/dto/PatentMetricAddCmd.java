@@ -1,5 +1,6 @@
 package com.alibaba.craftsman.dto;
 
+import com.alibaba.cola.dto.Response;
 import com.alibaba.craftsman.dto.clientobject.ATAMetricCO;
 import com.alibaba.craftsman.dto.clientobject.PatentMetricCO;
 import lombok.Data;
@@ -13,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @date 2019-03-03 11:37 AM
  */
 @Data
-public class PatentMetricAddCmd extends CommonCommand{
+public class PatentMetricAddCmd extends CommonCommand<Response>{
     @NotNull
     private PatentMetricCO  patentMetricCO;
 }
