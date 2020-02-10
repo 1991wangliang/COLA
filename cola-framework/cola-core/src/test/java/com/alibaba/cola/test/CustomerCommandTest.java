@@ -39,24 +39,7 @@ public class CustomerCommandTest {
     public void setUp() {
     }
 
-    @Test
-    public void testBizOneAddCustomerSuccess(){
-        //1. Prepare
-        AddCustomerCmd addCustomerCmd = new AddCustomerCmd();
-        CustomerCO customerCO = new CustomerCO();
-        customerCO.setCompanyName("alibaba");
-        customerCO.setSource(Constants.SOURCE_RFQ);
-        customerCO.setCustomerType(CustomerType.IMPORTANT);
-        addCustomerCmd.setCustomerCO(customerCO);
-        BizScenario scenario = BizScenario.valueOf(Constants.BIZ_1);
-        addCustomerCmd.setBizScenario(scenario);
 
-        //2. Execute
-        Response response = customerService.addCustomer(addCustomerCmd);
-
-        //3. Expect Success
-        Assert.assertTrue(response.isSuccess());
-    }
 
     @Test
     public void testBizOneAddCustomerFailure(){
@@ -76,6 +59,26 @@ public class CustomerCommandTest {
         Assert.assertFalse(response.isSuccess());
         Assert.assertEquals(response.getErrCode(), BasicErrorCode.BIZ_ERROR.getErrCode());
     }
+
+    @Test
+    public void testBizOneAddCustomerSuccess(){
+        //1. Prepare
+        AddCustomerCmd addCustomerCmd = new AddCustomerCmd();
+        CustomerCO customerCO = new CustomerCO();
+        customerCO.setCompanyName("alibaba");
+        customerCO.setSource(Constants.SOURCE_RFQ);
+        customerCO.setCustomerType(CustomerType.IMPORTANT);
+        addCustomerCmd.setCustomerCO(customerCO);
+        BizScenario scenario = BizScenario.valueOf(Constants.BIZ_1);
+        addCustomerCmd.setBizScenario(scenario);
+
+        //2. Execute
+        Response response = customerService.addCustomer(addCustomerCmd);
+
+        //3. Expect Success
+        Assert.assertTrue(response.isSuccess());
+    }
+
 
     @Test
     public void testBizTwoAddCustomer(){

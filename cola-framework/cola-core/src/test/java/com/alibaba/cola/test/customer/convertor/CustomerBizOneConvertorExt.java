@@ -6,6 +6,7 @@ import com.alibaba.cola.test.customer.Constants;
 import com.alibaba.cola.test.customer.CustomerCO;
 import com.alibaba.cola.test.customer.entity.CustomerEntity;
 import com.alibaba.cola.test.customer.entity.SourceType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @date 2018-01-07 3:05 AM
  */
 @Extension(bizId = Constants.BIZ_1)
+@Slf4j
 public class CustomerBizOneConvertorExt  implements CustomerConvertorExtPt{
 
     @Autowired
@@ -22,6 +24,8 @@ public class CustomerBizOneConvertorExt  implements CustomerConvertorExtPt{
 
     @Override
     public CustomerEntity clientToEntity(AddCustomerCmd addCustomerCmd){
+        log.warn("this is biz 1 clientToEntity.");
+        System.out.println("this is biz 1 clientToEntity.");
         CustomerEntity customerEntity = customerConvertor.clientToEntity(addCustomerCmd);
         CustomerCO customerCO=addCustomerCmd.getCustomerCO();
         //In this business, AD and RFQ are regarded as different source

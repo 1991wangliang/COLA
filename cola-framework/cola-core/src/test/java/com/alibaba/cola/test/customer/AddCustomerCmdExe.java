@@ -30,10 +30,15 @@ public class AddCustomerCmdExe implements ExecutorI<Response, AddCustomerCmd> {
         logger.info("Start processing command:" + cmd);
 
         //validation
-        extensionExecutor.executeVoid(AddCustomerValidatorExtPt.class, cmd.getBizScenario(), extension -> extension.validate(cmd));
+        extensionExecutor.executeVoid(AddCustomerValidatorExtPt.class,
+                cmd.getBizScenario(),
+                extension -> extension.validate(cmd));
 
         //Convert CO to Entity
-        CustomerEntity customerEntity = extensionExecutor.execute(CustomerConvertorExtPt.class, cmd.getBizScenario(), extension -> extension.clientToEntity(cmd));
+        CustomerEntity customerEntity =
+                extensionExecutor.execute(CustomerConvertorExtPt.class,
+                        cmd.getBizScenario(),
+                        extension -> extension.clientToEntity(cmd));
 
         //Call Domain Entity for business logic processing
         logger.info("Call Domain Entity for business logic processing..."+customerEntity);
