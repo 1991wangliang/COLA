@@ -10,7 +10,7 @@
 # 调整部分
 1. 修改Command为Executor。
 2. 定义对Repository的CQRS标准。
-3. 添加Domain的构造工厂,Domain可通过RepositoryBus、EventBus访问数据资源。
+3. 添加DomainEntity的抽象类,Domain可通过RepositoryBus、EventBus、ExtensionExecutor 访问数据资源。
 
 思路：
 https://github.com/alibaba/COLA/issues/61
@@ -22,9 +22,10 @@ class XXXDomain extends DomainObject{
     //初始化数据
     private final XXX xxx;
     
-    //资源对象，有DomainFactory构建传入，对象在DomainObject中，子类可直接使用。
-    protected static EventBus eventBus;
-    protected static RepositoryBus repositoryBus;
+    //资源对象，有Domain构造时传入，对象在DomainObject中，子类可直接使用。
+    protected static EventBus eventBus;//事件Bus
+    protected static RepositoryBus repositoryBus;//资源Bus
+    protected static ExtensionExecutor extensionExecutor;//扩展Bus
    
     
     //构造函数 初始化数据
