@@ -7,7 +7,7 @@
 
 也可以购买我的新书[《代码精进之路：从码农到工匠》](https://detail.tmall.com/item.htm?id=610042416451)，里面有关于COLA比较详细的描述和使用。
 
-# 调整部分
+# 我做的调整部分如下:
 1. 修改Command为Executor。
 2. 定义对Repository的CQRS标准。
 3. 添加DomainEntity的抽象类,Domain可通过RepositoryBus、EventBus、ExtensionExecutor 访问数据资源。
@@ -65,6 +65,12 @@ class XXXDomain extends DomainObject{
 mvn clean install -Dtest.skip=true 
 
 ```
+
+### 参考demo
+
+https://github.com/1991wangliang/springboot-ddd-demo
+
+
 
 # 项目说明
 **COLA既是框架，也是架构。创建COLA的主要目的是为应用架构提供一套简单的可以复制、可以理解、可以落地、可以控制复杂性的”指导和约束"。**
