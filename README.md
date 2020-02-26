@@ -62,7 +62,7 @@ class XXXDomain extends DomainObject{
 
 ```
 
-mvn clean install -Dtest.skip=true 
+mvn clean install -Dmaven.test.skip=true 
 
 ```
 
