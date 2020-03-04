@@ -5,8 +5,14 @@
 	<groupId>com.alibaba.cola</groupId>
 	<artifactId>all</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>2.0.0</version>
 	<name>all</name>
+
+	<parent>
+		<groupId>com.alibaba.cola</groupId>
+		<artifactId>cola-parent</artifactId>
+		<version>2.0.0</version>
+	</parent>
 
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -187,14 +193,36 @@
 	</dependencyManagement>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-source-plugin</artifactId>
-					<version>3.0.1</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
+
+
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>CodingApi Repository</name>
+			<url>http://gr.io/repository/maven-public/</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>Releases</id>
+			<url>http://gr.io/repository/maven-releases/</url>
+		</repository>
+	</distributionManagement>
 </project>
