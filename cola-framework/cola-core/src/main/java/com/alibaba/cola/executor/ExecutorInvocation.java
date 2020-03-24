@@ -53,6 +53,7 @@ public class ExecutorInvocation {
             response = getResponseInstance(executor);
             response.setSuccess(false);
             ExceptionHandlerFactory.getExceptionHandler().handleException(executor, response, e);
+            throw e;
         }
         finally {
             //make sure post interceptors performs even though exception happens
