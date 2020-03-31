@@ -26,7 +26,7 @@ public class EventHub {
     private ListMultimap<Class, EventHandlerI> eventRepository = ArrayListMultimap.create();
 
     @Getter
-    private Map<EventHandlerI, Class<? extends Response>> responseRepository = new HashMap<>();
+    private Map<Class<? extends EventHandlerI>, Class<? extends Response>> responseRepository = new HashMap<>();
     
     public List<EventHandlerI> getEventHandler(Class eventClass) {
         List<EventHandlerI> eventHandlerIList = findHandler(eventClass);
@@ -48,9 +48,9 @@ public class EventHub {
         for(Type type:types){
             Type[] paramTypes =  ((ParameterizedType)(type)).getActualTypeArguments();
             if(paramTypes!=null&&paramTypes.length==2){
-                Class responseClazz = paramTypes[0].getClass();
-                if(responseClazz.isInstance(Response.class)){
-                    responseRepository.put(executor,responseClazz);
+                Class responseClazz = (Class) paramTypes[0];
+                if(Response.class.isAssignableFrom(responseClazz)){
+                    responseRepository.put(executor.getClass(),responseClazz);
                 }
             }
         }
