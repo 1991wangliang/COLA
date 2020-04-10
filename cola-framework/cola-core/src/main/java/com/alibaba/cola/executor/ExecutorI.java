@@ -11,5 +11,27 @@ import com.alibaba.cola.dto.Response;
  */
 public interface ExecutorI<R extends Response, C extends Executor> {
 
-    public R execute(C cmd);
+    /**
+     *
+     * @param cmd
+     * @return
+     */
+    default R execute(C cmd){
+        init(cmd);
+        return execute();
+    }
+
+    /**
+     * 初始化参数
+     * @param cmd
+     */
+    default void init(C cmd){}
+
+    /**
+     * 执行业务
+     * @return
+     */
+    default R execute(){
+        return null;
+    }
 }
