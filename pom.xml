@@ -26,27 +26,11 @@
     </properties>
 
     <modules>
-<!--        <module>cola-archetype-service</module>-->
-<!--        <module>cola-archetype-web</module>-->
+        <module>cola-archetype-service</module>
+        <module>cola-archetype-web</module>
         <module>cola-framework</module>
-<!--        <module>sample/craftsman</module>-->
+        <module>sample/craftsman</module>
     </modules>
-
-
-    <repositories>
-        <repository>
-            <id>nexus</id>
-            <name>CodingApi Repository</name>
-            <url>http://gr.io/repository/maven-public/</url>
-        </repository>
-    </repositories>
-
-    <distributionManagement>
-        <repository>
-            <id>Releases</id>
-            <url>http://gr.io/repository/maven-releases/</url>
-        </repository>
-    </distributionManagement>
 
 
 
