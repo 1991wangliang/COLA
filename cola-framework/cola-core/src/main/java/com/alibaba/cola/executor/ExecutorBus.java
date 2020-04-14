@@ -1,6 +1,6 @@
 package com.alibaba.cola.executor;
 
-import com.alibaba.cola.dto.Executor;
+import com.alibaba.cola.dto.Command;
 import com.alibaba.cola.dto.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class ExecutorBus implements ExecutorBusI {
     private ExecutorHub executorHub;
 
     @Override
-    public <T extends Response> T send(Executor<T> cmd) {
+    public <T extends Response> T send(Command<T> cmd) {
             return (T)executorHub.getCommandInvocation(cmd.getClass()).invoke(cmd);
     }
 

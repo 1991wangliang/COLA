@@ -5,6 +5,7 @@ import com.alibaba.cola.exception.framework.BasicErrorCode;
 import com.alibaba.cola.exception.framework.BaseException;
 import com.alibaba.cola.dto.ErrorCodeI;
 import com.alibaba.cola.exception.framework.ColaException;
+import com.alibaba.cola.exception.framework.ExceptionHandlerFactory;
 import com.alibaba.cola.logger.Logger;
 import com.alibaba.cola.logger.LoggerFactory;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -40,12 +41,13 @@ public class EventBus implements EventBusI{
     @Override
     public Response fire(EventI event) {
         Response response = null;
-        EventHandlerI eventHandlerI = null;
+        EventHandlerI eventHandler = null;
         try {
-            eventHandlerI = eventHub.getEventHandler(event.getClass()).get(0);
-            response = eventHandlerI.execute(event);
+            eventHandler = eventHub.getEventHandler(event.getClass()).get(0);
+            response = eventHandler.execute(event);
         }catch (Exception exception) {
-            response = handleException(eventHandlerI, response, exception);
+            response = handleException(eventHandler, response, exception);
+            ExceptionHandlerFactory.getExceptionHandler().handleException(event,response,exception);
         }
         return response;
     }
@@ -58,6 +60,7 @@ public class EventBus implements EventBusI{
                 response = p.execute(event);
             }catch (Exception exception) {
                 response = handleException(p, response, exception);
+                ExceptionHandlerFactory.getExceptionHandler().handleException(event,response,exception);
             }
             return response;
         }).collect(Collectors.toList());
@@ -75,6 +78,7 @@ public class EventBus implements EventBusI{
                 }
             }catch (Exception exception) {
                 response = handleException(p, response, exception);
+                ExceptionHandlerFactory.getExceptionHandler().handleException(event,response,exception);
             }
             return response;
         }).collect(Collectors.toList());

@@ -1,8 +1,9 @@
 package com.alibaba.cola.exception.framework;
 
-import com.alibaba.cola.dto.Executor;
+import com.alibaba.cola.dto.Command;
 import com.alibaba.cola.dto.ErrorCodeI;
 import com.alibaba.cola.dto.Response;
+import com.alibaba.cola.event.EventI;
 import com.alibaba.cola.exception.ExceptionHandlerI;
 import com.alibaba.cola.logger.Logger;
 import com.alibaba.cola.logger.LoggerFactory;
@@ -20,12 +21,18 @@ public class DefaultExceptionHandler implements ExceptionHandlerI {
     public static DefaultExceptionHandler singleton = new DefaultExceptionHandler();
 
     @Override
-    public void handleException(Executor cmd, Response response, Exception exception) {
+    public void handleException(Command cmd, Response response, Exception exception) {
         buildResponse(response, exception);
         printLog(cmd, response, exception);
     }
 
-    private void printLog(Executor cmd, Response response, Exception exception) {
+    @Override
+    public void handleException(EventI event, Response response, Exception exception) {
+        buildResponse(response, exception);
+        printLog(event, response, exception);
+    }
+
+    private void printLog(Object cmd, Response response, Exception exception) {
         if(exception instanceof BaseException){
             //biz exception is expected, only warn it
             logger.warn(buildErrorMsg(cmd, response));
@@ -36,7 +43,7 @@ public class DefaultExceptionHandler implements ExceptionHandlerI {
         }
     }
 
-    private String buildErrorMsg(Executor cmd, Response response) {
+    private String buildErrorMsg(Object cmd, Response response) {
         return "Process [" + cmd + "] failed, errorCode: "
                 + response.getErrCode() + " errorMsg:"
                 + response.getErrMessage();

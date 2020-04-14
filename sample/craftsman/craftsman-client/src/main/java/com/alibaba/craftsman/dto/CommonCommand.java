@@ -1,6 +1,6 @@
 package com.alibaba.craftsman.dto;
 
-import com.alibaba.cola.dto.Executor;
+import com.alibaba.cola.dto.Command;
 
 /**
  * 整个应用通用的Command
@@ -8,7 +8,7 @@ import com.alibaba.cola.dto.Executor;
  * @author Frank Zhang
  * @date 2019-02-28 7:18 PM
  */
-public class CommonCommand<T> extends Executor<T> {
+public class CommonCommand<T> extends Command<T> {
     private String operater;
     private boolean needsOperator;
 

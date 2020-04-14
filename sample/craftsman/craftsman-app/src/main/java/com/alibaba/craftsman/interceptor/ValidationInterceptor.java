@@ -1,6 +1,6 @@
 package com.alibaba.craftsman.interceptor;
 
-import com.alibaba.cola.dto.Executor;
+import com.alibaba.cola.dto.Command;
 import com.alibaba.cola.exception.BizException;
 import com.alibaba.cola.executor.ExecutorInterceptorI;
 import com.alibaba.cola.executor.PreInterceptor;
@@ -31,8 +31,8 @@ public class ValidationInterceptor extends AbstractValidationInterceptor impleme
             .messageInterpolator(new ColaMessageInterpolator()).buildValidatorFactory();
 
     @Override
-    public void preIntercept(Executor executor) {
-        super.validate(executor);
+    public void preIntercept(Command command) {
+        super.validate(command);
     }
 
     public void doValidation(Object target){

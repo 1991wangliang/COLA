@@ -1,7 +1,8 @@
 package com.alibaba.cola.exception;
 
-import com.alibaba.cola.dto.Executor;
+import com.alibaba.cola.dto.Command;
 import com.alibaba.cola.dto.Response;
+import com.alibaba.cola.event.EventI;
 
 /**
  * ExceptionHandlerI provide a backdoor that Application can override the default Exception handling
@@ -10,5 +11,10 @@ import com.alibaba.cola.dto.Response;
  * @date 2019-01-02 11:25 PM
  */
 public interface ExceptionHandlerI {
-    public void handleException(Executor cmd, Response response, Exception exception);
+
+    public void handleException(Command cmd, Response response, Exception exception);
+
+
+    public void handleException(EventI event, Response response, Exception exception);
+
 }

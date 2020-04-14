@@ -1,6 +1,6 @@
 package com.alibaba.cola.executor;
 
-import com.alibaba.cola.dto.Executor;
+import com.alibaba.cola.dto.Command;
 import com.alibaba.cola.dto.Response;
 
 /**
@@ -17,6 +17,6 @@ public interface ExecutorBusI {
      * @param command
      * @return Response
      */
-    public <T extends Response> T send(Executor<T> command);
+    public <T extends Response> T send(Command<T> command);
 
 }
