@@ -6,7 +6,7 @@ package com.alibaba.cola.dto;
  * 
  * @author fulan.zjf 2017年10月22日 下午7:26:49
  */
-public abstract class Query extends Command {
+public abstract class Query<R> extends Command<R> {
     
     private static final long serialVersionUID = 1L;
 

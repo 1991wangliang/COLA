@@ -48,6 +48,7 @@ public class EventBus implements EventBusI{
         }catch (Exception exception) {
             response = handleException(eventHandler, response, exception);
             ExceptionHandlerFactory.getExceptionHandler().handleException(event,response,exception);
+            throw exception;
         }
         return response;
     }
