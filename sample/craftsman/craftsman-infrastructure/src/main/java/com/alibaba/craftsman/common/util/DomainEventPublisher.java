@@ -1,6 +1,7 @@
 package com.alibaba.craftsman.common.util;
 
 import com.alibaba.cola.domain.DomainEventServiceI;
+import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.event.DomainEventI;
 import com.alibaba.cola.event.EventBusI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,17 @@ public class DomainEventPublisher implements DomainEventServiceI{
     private EventBusI eventBus;
 
     @Override
-    public void publish(DomainEventI domainEvent) {
-        eventBus.fire(domainEvent);
+    public Response publish(DomainEventI domainEvent) {
+        return eventBus.fire(domainEvent);
+    }
+
+    @Override
+    public void publishAll(DomainEventI domainEvent) {
+        eventBus.fireAll(domainEvent);
+    }
+
+    @Override
+    public void asyncPublish(DomainEventI event) {
+        eventBus.asyncFire(event);
     }
 }

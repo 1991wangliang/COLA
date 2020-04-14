@@ -44,13 +44,23 @@ public class EventHub {
     public void register(Class<? extends EventI> eventClz, EventHandlerI executor){
         eventRepository.put(eventClz, executor);
 
-        Type[]  types = executor.getClass().getGenericInterfaces();
-        for(Type type:types){
-            Type[] paramTypes =  ((ParameterizedType)(type)).getActualTypeArguments();
-            if(paramTypes!=null&&paramTypes.length==2){
-                Class responseClazz = (Class) paramTypes[0];
-                if(Response.class.isAssignableFrom(responseClazz)){
-                    responseRepository.put(executor.getClass(),responseClazz);
+        Type[] types = executor.getClass().getGenericInterfaces();
+        for (Type type : types) {
+            Type[] paramTypes = ((ParameterizedType) (type)).getActualTypeArguments();
+            if (paramTypes != null && paramTypes.length == 2) {
+                Class responseClazz;
+                if (ParameterizedType.class.isAssignableFrom(paramTypes[0].getClass())) {
+                    ParameterizedType responseType = (ParameterizedType) paramTypes[0];
+                    try {
+                        responseClazz = Class.forName(responseType.getRawType().getTypeName());
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    responseClazz = (Class) paramTypes[0];
+                }
+                if (Response.class.isAssignableFrom(responseClazz)) {
+                    responseRepository.put(executor.getClass(), responseClazz);
                 }
             }
         }

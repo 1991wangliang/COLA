@@ -1,6 +1,7 @@
 package com.alibaba.cola.domain;
 
 
+import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.event.DomainEventI;
 
 /**
@@ -16,5 +17,19 @@ public interface DomainEventServiceI {
      * 具体的事件处理机制，由应用自己实现，在sofa-extension中，我们提供了MetaQ的实现
      * @param domainEvent
      */
-    public void publish(DomainEventI domainEvent);
+    Response publish(DomainEventI domainEvent);
+
+
+    /**
+     *
+     * @param domainEvent
+     */
+    void publishAll(DomainEventI domainEvent);
+
+
+    /**
+     * Async fire all handlers
+     * @param event
+     */
+    void asyncPublish(DomainEventI event);
 }
