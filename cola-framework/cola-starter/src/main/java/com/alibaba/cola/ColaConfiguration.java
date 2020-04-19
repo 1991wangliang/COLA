@@ -1,10 +1,12 @@
 package com.alibaba.cola;
 
 import com.alibaba.cola.boot.Bootstrap;
+import com.alibaba.cola.domain.DefaultDomainEventService;
+import com.alibaba.cola.domain.DomainEventServiceI;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,14 +21,21 @@ import java.util.List;
  */
 @ComponentScan
 @Configuration
+@Slf4j
 public class ColaConfiguration {
 
     @Bean(initMethod = "init")
-    @ConditionalOnMissingBean
     public Bootstrap bootstrap(PackagesToScan packagesToScan) {
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.setPackages(packagesToScan.getList());
+        log.info("cola init finish.");
         return bootstrap;
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public DomainEventServiceI domainEventService(){
+        return new DefaultDomainEventService();
     }
 
     @Bean

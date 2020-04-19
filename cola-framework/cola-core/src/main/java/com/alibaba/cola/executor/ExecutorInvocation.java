@@ -1,5 +1,6 @@
 package com.alibaba.cola.executor;
 
+import com.alibaba.cola.domain.DomainEventServiceI;
 import com.alibaba.cola.dto.Command;
 import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.exception.framework.ExceptionHandlerFactory;
@@ -31,6 +32,9 @@ public class ExecutorInvocation {
     @Autowired
     private ExecutorHub executorHub;
 
+    @Autowired
+    private DomainEventServiceI domainEventService;
+
 
     public ExecutorInvocation() {
         
@@ -47,7 +51,9 @@ public class ExecutorInvocation {
         Response response = null;
         try {
             preIntercept(command);
+            EventThreadLocal.clear();
             response = commandExecutor.execute(command);
+            EventThreadLocal.send(domainEventService);
         }
         catch(Exception e){
             response = getResponseInstance(command);

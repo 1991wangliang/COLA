@@ -210,19 +210,4 @@
 		</plugins>
 	</build>
 
-
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>CodingApi Repository</name>
-			<url>http://gr.io/repository/maven-public/</url>
-		</repository>
-	</repositories>
-
-	<distributionManagement>
-		<repository>
-			<id>Releases</id>
-			<url>http://gr.io/repository/maven-releases/</url>
-		</repository>
-	</distributionManagement>
 </project>
