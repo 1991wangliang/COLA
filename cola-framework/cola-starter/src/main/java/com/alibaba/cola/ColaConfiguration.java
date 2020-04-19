@@ -3,6 +3,8 @@ package com.alibaba.cola;
 import com.alibaba.cola.boot.Bootstrap;
 import com.alibaba.cola.domain.DefaultDomainEventService;
 import com.alibaba.cola.domain.DomainEventServiceI;
+import com.alibaba.cola.event.DefaultEventBus;
+import com.alibaba.cola.event.EventBusI;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +36,14 @@ public class ColaConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public DomainEventServiceI domainEventService(){
-        return new DefaultDomainEventService();
+    public DomainEventServiceI domainEventService(EventBusI eventBus){
+        return new DefaultDomainEventService(eventBus);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public EventBusI eventBus(){
+        return new DefaultEventBus();
     }
 
     @Bean

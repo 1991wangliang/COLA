@@ -7,6 +7,7 @@ import com.alibaba.cola.dto.Response;
  * EventBus interface
  * @author shawnzhan.zxy
  * @date 2017/11/20
+ * 相当于事件的发布者,EventHandlerI是事件的订阅者
  */
 public interface EventBusI {
 

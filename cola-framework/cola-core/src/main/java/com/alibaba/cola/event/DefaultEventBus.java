@@ -1,18 +1,20 @@
 package com.alibaba.cola.event;
 
-import com.alibaba.cola.dto.Response;
-import com.alibaba.cola.exception.framework.BasicErrorCode;
-import com.alibaba.cola.exception.framework.BaseException;
 import com.alibaba.cola.dto.ErrorCodeI;
+import com.alibaba.cola.dto.Response;
+import com.alibaba.cola.exception.framework.BaseException;
+import com.alibaba.cola.exception.framework.BasicErrorCode;
 import com.alibaba.cola.exception.framework.ColaException;
 import com.alibaba.cola.exception.framework.ExceptionHandlerFactory;
 import com.alibaba.cola.logger.Logger;
 import com.alibaba.cola.logger.LoggerFactory;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -20,10 +22,11 @@ import java.util.stream.Collectors;
  *
  * @author shawnzhan.zxy
  * @date 2017/11/20
+ *
  */
-@Component
-public class EventBus implements EventBusI{
-    Logger logger = LoggerFactory.getLogger(EventBus.class);
+public class DefaultEventBus implements EventBusI{
+
+    Logger logger = LoggerFactory.getLogger(DefaultEventBus.class);
 
     /**
      * 默认线程池

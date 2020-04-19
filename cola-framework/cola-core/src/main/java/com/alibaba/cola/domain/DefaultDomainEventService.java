@@ -2,14 +2,14 @@ package com.alibaba.cola.domain;
 
 import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.event.DomainEventI;
-import com.alibaba.cola.event.EventBus;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.alibaba.cola.event.EventBusI;
+import lombok.AllArgsConstructor;
 
 
+@AllArgsConstructor
 public class DefaultDomainEventService implements DomainEventServiceI {
 
-    @Autowired
-    private EventBus eventBus;
+    private EventBusI eventBus;
 
     @Override
     public Response publish(DomainEventI domainEvent) {

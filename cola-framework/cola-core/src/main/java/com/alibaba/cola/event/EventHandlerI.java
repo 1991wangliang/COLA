@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
  *
  * @author shawnzhan.zxy
  * @date 2017/11/20
+ * 事件的订阅方.事件通过EventBus发布事件.
  */
 public interface EventHandlerI<R extends Response, E extends EventI> {
 

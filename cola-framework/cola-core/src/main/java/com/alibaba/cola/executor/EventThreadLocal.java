@@ -6,6 +6,10 @@ import com.alibaba.cola.event.DomainEventI;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author lorne
+ * MQ事务消息，在通过梳理完业务的主线与延伸以后，可通过事务消息机制实现对事务的控制。
+ */
 public class EventThreadLocal {
 
     private List<DomainEventI> events;
@@ -33,8 +37,7 @@ public class EventThreadLocal {
         threadLocal.set(current);
     }
 
-
-    public static void send(DomainEventServiceI domainEventService) {
+    protected static void send(DomainEventServiceI domainEventService) {
         EventThreadLocal current = current();
         if(current==null){
             return;
