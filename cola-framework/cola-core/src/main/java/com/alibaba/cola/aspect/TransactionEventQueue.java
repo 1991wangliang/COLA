@@ -1,4 +1,4 @@
-package com.alibaba.cola.executor;
+package com.alibaba.cola.aspect;
 
 import com.alibaba.cola.domain.DomainEventServiceI;
 import com.alibaba.cola.event.DomainEventI;
@@ -8,19 +8,21 @@ import java.util.List;
 
 /**
  * @author lorne
- * MQ事务消息，在通过梳理完业务的主线与延伸以后，可通过事务消息机制实现对事务的控制。
+ *
+ * 事务消息队列，是用在延伸业务的事件触发上。
+ * 该队列中的Event只有在开启事务后且事务可提交时才发送.
  */
-public class EventThreadLocal {
+public class TransactionEventQueue {
 
     private List<DomainEventI> events;
 
-    private EventThreadLocal() {
+    private TransactionEventQueue() {
         this.events =  new ArrayList<>();
     }
 
-    private static ThreadLocal<EventThreadLocal> threadLocal = new ThreadLocal<>();
+    private static ThreadLocal<TransactionEventQueue> threadLocal = new ThreadLocal<>();
 
-    protected synchronized static EventThreadLocal current(){
+    protected synchronized static TransactionEventQueue current(){
         return threadLocal.get();
     }
 
@@ -29,16 +31,16 @@ public class EventThreadLocal {
     }
 
     public synchronized static void push(DomainEventI event){
-        EventThreadLocal current = current();
+        TransactionEventQueue current = current();
         if(current==null){
-            current = new EventThreadLocal();
+            current = new TransactionEventQueue();
         }
         current.events.add(event);
         threadLocal.set(current);
     }
 
     protected static void send(DomainEventServiceI domainEventService) {
-        EventThreadLocal current = current();
+        TransactionEventQueue current = current();
         if(current==null){
             return;
         }
