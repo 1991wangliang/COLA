@@ -9,20 +9,20 @@ import java.util.List;
 /**
  * @author lorne
  *
- * 事务消息队列，是用在延伸业务的事件触发上。
- * 该队列中的Event只有在开启事务后且事务可提交时才发送.
+ * 业务消息队列，是用在延伸业务的事件触发上。
+ * 该队列中的Event只有在业务正常执行完后才发送消息.
  */
-public class TransactionEventQueue {
+public class ServiceEventQueue {
 
     private List<DomainEventI> events;
 
-    private TransactionEventQueue() {
+    private ServiceEventQueue() {
         this.events =  new ArrayList<>();
     }
 
-    private static ThreadLocal<TransactionEventQueue> threadLocal = new ThreadLocal<>();
+    private static ThreadLocal<ServiceEventQueue> threadLocal = new ThreadLocal<>();
 
-    protected synchronized static TransactionEventQueue current(){
+    protected synchronized static ServiceEventQueue current(){
         return threadLocal.get();
     }
 
@@ -31,16 +31,16 @@ public class TransactionEventQueue {
     }
 
     public synchronized static void push(DomainEventI event){
-        TransactionEventQueue current = current();
+        ServiceEventQueue current = current();
         if(current==null){
-            current = new TransactionEventQueue();
+            current = new ServiceEventQueue();
         }
         current.events.add(event);
         threadLocal.set(current);
     }
 
     protected static void send(DomainEventServiceI domainEventService) {
-        TransactionEventQueue current = current();
+        ServiceEventQueue current = current();
         if(current==null){
             return;
         }

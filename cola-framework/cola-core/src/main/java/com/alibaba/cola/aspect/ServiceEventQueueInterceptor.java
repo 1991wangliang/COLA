@@ -6,15 +6,15 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 
 @AllArgsConstructor
-public class TransactionEventQueueInterceptor implements MethodInterceptor{
+public class ServiceEventQueueInterceptor implements MethodInterceptor{
 
     private DomainEventServiceI domainEventService;
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
-        TransactionEventQueue.clear();
+        ServiceEventQueue.clear();
         Object res =  invocation.proceed();
-        TransactionEventQueue.send(domainEventService);
+        ServiceEventQueue.send(domainEventService);
         return res;
     }
 }
