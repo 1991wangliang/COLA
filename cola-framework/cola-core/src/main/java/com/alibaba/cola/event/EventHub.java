@@ -7,8 +7,6 @@ import com.google.common.collect.ListMultimap;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,27 +41,15 @@ public class EventHub {
      */
     public void register(Class<? extends EventI> eventClz, EventHandlerI executor){
         eventRepository.put(eventClz, executor);
-
-        Type[] types = executor.getClass().getGenericInterfaces();
-        for (Type type : types) {
-            Type[] paramTypes = ((ParameterizedType) (type)).getActualTypeArguments();
-            if (paramTypes != null && paramTypes.length == 2) {
-                Class responseClazz;
-                if (ParameterizedType.class.isAssignableFrom(paramTypes[0].getClass())) {
-                    ParameterizedType responseType = (ParameterizedType) paramTypes[0];
-                    try {
-                        responseClazz = Class.forName(responseType.getRawType().getTypeName());
-                    } catch (ClassNotFoundException e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    responseClazz = (Class) paramTypes[0];
-                }
-                if (Response.class.isAssignableFrom(responseClazz)) {
-                    responseRepository.put(executor.getClass(), responseClazz);
-                }
+        try {
+            Class responseClazz = executor.getClass().getDeclaredMethod("execute", EventI.class).getReturnType();
+            if (Response.class.isAssignableFrom(responseClazz)) {
+                responseRepository.put(executor.getClass(), responseClazz);
             }
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
+
     }
 
     private List<EventHandlerI> findHandler(Class<? extends EventI> eventClass){
