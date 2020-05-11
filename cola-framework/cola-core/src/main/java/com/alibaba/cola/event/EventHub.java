@@ -25,7 +25,7 @@ public class EventHub {
 
     @Getter
     private Map<Class<? extends EventHandlerI>, Class<? extends Response>> responseRepository = new HashMap<>();
-    
+
     public List<EventHandlerI> getEventHandler(Class eventClass) {
         List<EventHandlerI> eventHandlerIList = findHandler(eventClass);
         if (eventHandlerIList == null || eventHandlerIList.size() == 0) {
@@ -42,7 +42,7 @@ public class EventHub {
     public void register(Class<? extends EventI> eventClz, EventHandlerI executor){
         eventRepository.put(eventClz, executor);
         try {
-            Class responseClazz = executor.getClass().getDeclaredMethod("execute", EventI.class).getReturnType();
+            Class responseClazz = executor.getClass().getMethod("execute", EventI.class).getReturnType();
             if (Response.class.isAssignableFrom(responseClazz)) {
                 responseRepository.put(executor.getClass(), responseClazz);
             }

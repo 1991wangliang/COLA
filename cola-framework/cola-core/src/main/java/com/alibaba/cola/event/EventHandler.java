@@ -13,4 +13,7 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Component
 public @interface EventHandler {
+
+    Class<?> value() default Void.class;
+
 }

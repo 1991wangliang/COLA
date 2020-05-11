@@ -10,9 +10,10 @@ package com.alibaba.cola.boot;
 import com.alibaba.cola.common.ApplicationContextHelper;
 import com.alibaba.cola.common.ColaConstant;
 import com.alibaba.cola.event.EventHandler;
-import com.alibaba.cola.event.EventI;
 import com.alibaba.cola.event.EventHandlerI;
 import com.alibaba.cola.event.EventHub;
+import com.alibaba.cola.event.EventI;
+import com.alibaba.cola.exception.Assert;
 import com.alibaba.cola.exception.framework.ColaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,6 +40,14 @@ public class EventRegister implements RegisterI {
     }
 
     private Class<? extends EventI> getEventFromExecutor(Class<?> eventExecutorClz) {
+
+        EventHandler eventHandler = eventExecutorClz.getAnnotation(EventHandler.class);
+        Assert.notNull(eventHandler,"系统错误,无效EventHandler");
+
+        if(EventI.class.isAssignableFrom(eventHandler.value())){
+            return (Class<? extends EventI>)eventHandler.value();
+        }
+
         Method[] methods = eventExecutorClz.getDeclaredMethods();
         for (Method method : methods) {
             if (isExecuteMethod(method)){

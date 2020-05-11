@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class MultiResponse<T> extends Response {
 
-    private int total;
+    private long total;
 
     private Collection<T> data;
 
-    public static <T> MultiResponse<T> of(Collection<T> data, int total) {
+    public static <T> MultiResponse<T> of(Collection<T> data, long total) {
         MultiResponse<T> multiResponse = new MultiResponse<>();
         multiResponse.setSuccess(true);
         multiResponse.setData(data);
@@ -24,17 +24,24 @@ public class MultiResponse<T> extends Response {
         return multiResponse;
     }
 
+
+    public static <T> MultiResponse<T> of(Collection<T> data) {
+        MultiResponse<T> multiResponse = new MultiResponse<>();
+        multiResponse.setSuccess(true);
+        multiResponse.setData(data);
+        multiResponse.setTotal(data.size());
+        return multiResponse;
+    }
+
     public static <T> MultiResponse<T> ofWithoutTotal(Collection<T> data) {
         return of(data,0);
     }
 
-    
-    public int getTotal() {
+    public long getTotal() {
         return total;
     }
 
-    
-    public void setTotal(int total) {
+    public void setTotal(long total) {
         this.total = total;
     }
 
@@ -42,7 +49,7 @@ public class MultiResponse<T> extends Response {
         return null == data ? new ArrayList<>() : new ArrayList<>(data);
     }
 
-    
+
     public void setData(Collection<T> data) {
         this.data = data;
     }
