@@ -7,57 +7,6 @@
 
 也可以购买我的新书[《代码精进之路：从码农到工匠》](https://detail.tmall.com/item.htm?id=610042416451)，里面有关于COLA比较详细的描述和使用。
 
-# 我做的调整部分如下:
-1. 修改Command为Executor。
-2. 定义对Repository的CQRS标准。
-3. 添加DomainEntity的抽象类,Domain可通过RepositoryBus、EventBus、ExtensionExecutor 访问数据资源。
-
-思路：
-https://github.com/alibaba/COLA/issues/61
-
-参考Domain
-```java 
-//Domain 需要继承DomainObject对象
-class XXXDomain extends DomainObject{
-    //初始化数据
-    private final XXX xxx;
-    
-    //资源对象，有Domain构造时传入，对象在DomainObject中，子类可直接使用。
-    protected static EventBus eventBus;//事件Bus
-    protected static RepositoryBus repositoryBus;//资源Bus
-    protected static ExtensionExecutor extensionExecutor;//扩展Bus
-   
-    
-    //构造函数 初始化数据
-    public XXXDomain(XXX xxx){
-        this.xxx = xxx;
-    }
-    
-     //构造函数 初始化数据
-    public XXXDomain(String xxxId){
-        this.xxx = repositoryBus.execute(new XXXHandler.GetById(xxxId));
-    }
-    
-    //临时对象，用于业务处理过程中
-    private Object temp;
-    
-    //domain的main函数，也可以执行其他的public方法。
-    public void execute(){
-        //...
-    }
-    
-    
-    public void test(){
-        //...
-    }
-    
-    
-    private void temp(){
-        //temp doing...
-    }
-
-}
-```
 ### 安装脚本
 
 ```
