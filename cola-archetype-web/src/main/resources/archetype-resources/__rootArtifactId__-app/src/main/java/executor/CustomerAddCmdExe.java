@@ -4,8 +4,8 @@
 package ${package}.executor;
 
 
-import com.alibaba.cola.command.Command;
-import com.alibaba.cola.command.CommandExecutorI;
+import com.alibaba.cola.executor.Executor;
+import com.alibaba.cola.executor.ExecutorI;
 import com.alibaba.cola.domain.DomainEventServiceI;
 import com.alibaba.cola.dto.Response;
 import com.alibaba.cola.exception.BizException;
@@ -13,8 +13,8 @@ import ${package}.dto.CustomerAddCmd;
 import ${package}.dto.domainmodel.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Command
-public class CustomerAddCmdExe implements CommandExecutorI<Response, CustomerAddCmd>{
+@Executor
+public class CustomerAddCmdExe implements ExecutorI<Response, CustomerAddCmd>{
 
     @Override
     public Response execute(CustomerAddCmd cmd) {

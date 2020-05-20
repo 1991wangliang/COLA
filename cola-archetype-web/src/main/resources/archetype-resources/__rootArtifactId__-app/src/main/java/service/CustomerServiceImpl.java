@@ -3,7 +3,7 @@
 #set( $symbol_escape = '\' )
 package ${package}.service;
 
-import com.alibaba.cola.command.CommandBusI;
+import com.alibaba.cola.executor.ExecutorBusI;
 import com.alibaba.cola.dto.MultiResponse;
 import com.alibaba.cola.dto.Response;
 import ${package}.api.CustomerServiceI;
@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 public class CustomerServiceImpl implements CustomerServiceI {
 
     @Autowired
-    private CommandBusI commandBus;
+    private ExecutorBusI executorBusI;
 
     @Override
     public Response addCustomer(CustomerAddCmd customerAddCmd) {
-        return (Response)commandBus.send(customerAddCmd);
+        return executorBusI.send(customerAddCmd);
     }
 
     @Override
     public MultiResponse<Customer> listByName(CustomerListByNameQry customerListByNameQry) {
-        return (MultiResponse<Customer>)commandBus.send(customerListByNameQry);
+        return executorBusI.send(customerListByNameQry);
     }
 
 }

@@ -2,13 +2,9 @@ package com.alibaba.craftsman;
 
 import com.alibaba.cola.logger.Logger;
 import com.alibaba.cola.logger.LoggerFactory;
-import com.alibaba.craftsman.tunnel.database.MetricTunnel;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.Date;
 
 /**
  * Spring Boot Starter
@@ -17,7 +13,7 @@ import java.util.Date;
  *
  * @author Frank Zhang
  */
-@SpringBootApplication(scanBasePackages = {"com.alibaba.craftsman","com.alibaba.cola"})
+@SpringBootApplication
 @MapperScan("com.alibaba.craftsman.tunnel.database")
 public class Application {
 
