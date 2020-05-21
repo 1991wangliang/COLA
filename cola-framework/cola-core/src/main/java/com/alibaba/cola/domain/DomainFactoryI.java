@@ -7,6 +7,8 @@ package com.alibaba.cola.domain;
  */
 public interface DomainFactoryI<T extends EntityObject> {
 
-	T create();
+	default T create(){
+		return null;
+	}
 
 }
