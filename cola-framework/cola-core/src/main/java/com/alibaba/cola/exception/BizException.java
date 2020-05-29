@@ -16,6 +16,11 @@ public class BizException extends BaseException {
         this.setErrCode(BasicErrorCode.BIZ_ERROR);
     }
 
+    public BizException(ErrorCodeI errCode){
+        super(errCode.getErrDesc());
+        this.setErrCode(errCode);
+    }
+
     public BizException(ErrorCodeI errCode, String errMessage){
     	super(errMessage);
     	this.setErrCode(errCode);
